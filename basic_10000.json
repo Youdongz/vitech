@@ -1,14 +1,4 @@
-{
-  "responseHeader":{
-    "zkConnected":true,
-    "status":0,
-    "QTime":14,
-    "params":{
-      "q":"*:*",
-      "indent":"on",
-      "rows":"10000",
-      "wt":"json"}},
-  "response":{"numFound":1482000,"start":0,"docs":[
+[
       {
         "id":"1318",
         "city":"Akutan",
@@ -110338,4 +110328,3 @@
         "latitude":40,
         "name":"ABDUH SALAM,TADDSHANA ",
         "collection_id":"V_Participant"}]
-  }}
