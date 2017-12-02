@@ -14,5 +14,6 @@
 
 * basic_10000.json -> contains 10,000 entries of basic info
 * basic_50.json -> contains 50 entries of basic info
+* data_1400000 -> contains 1.4 million entires of basic info (all)
 
 Note: more coming...

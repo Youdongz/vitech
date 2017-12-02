@@ -5,8 +5,12 @@
 
 {% block title %} Trends {% endblock %}
 
-{% block content %}
+{% block navbar %}
+    {{super()}}
+{% endblock %}
 
+{% block content %}
+    
     <div class="container">
 
         <div class="row">
@@ -24,7 +28,10 @@
         <div class = "col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <div id = "barGraph"></div> <!-- insert visualizations here -->
+                    <div>
+                        <div id="chartContainer" style="height: 300px; width: 100%;">asdf</div>
+                        <div id="chartContainer2" style="height: 300px; width: 100%;">asdf</div>
+                    </div> <!-- insert visualizations here -->
                 </div>
             </div>
         </div>
@@ -41,5 +48,60 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
     <!-- Plotly.js -->
     <script src="https://d14fo0winaifog.cloudfront.net/plotly-basic.js"></script>
+    <!-- Canvas -->
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+
+    <script>
+        var options = {
+        exportEnabled: true,
+        animationEnabled: true,
+        title: {
+            text: "jQuery Spline Area Chart"
+        },
+        data: [
+        {
+            type: "splineArea", //change it to line, area, bar, pie, etc
+            dataPoints: [
+                { y: 10 },
+                { y: 6 },
+                { y: 14 },
+                { y: 12 },
+                { y: 19 },
+                { y: 14 },
+                { y: 26 },
+                { y: 10 },
+                { y: 22 }
+            ]
+        }
+        ]
+    };
+    $("#chartContainer").CanvasJSChart(options);
+
+    var chart = new CanvasJS.Chart("chartContainer2", {
+        animationEnabled: true,
+        title:{
+            text: "Email Categories",
+            horizontalAlign: "left"
+        },
+        data: [{
+            type: "doughnut",
+            startAngle: 60,
+            //innerRadius: 60,
+            indexLabelFontSize: 17,
+            indexLabel: "{label} - #percent%",
+            toolTipContent: "<b>{label}:</b> {y} (#percent%)",
+            dataPoints: [
+                { y: 67, label: "Inbox" },
+                { y: 28, label: "Archives" },
+                { y: 10, label: "Labels" },
+                { y: 7, label: "Drafts"},
+                { y: 15, label: "Trash"},
+                { y: 6, label: "Spam"}
+            ]
+        }]
+    });
+    chart.render();
+    </script>
 
 {% endblock %}
