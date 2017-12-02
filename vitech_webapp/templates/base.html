@@ -1,4 +1,5 @@
-{%- extends "bootstrap/base.html" %}
+
+{% extends "bootstrap/base.html" %}
 
 {% block title %} Vitech webapp {% endblock %}
 
@@ -9,14 +10,13 @@
 
 {% block navbar %}
   <nav class="navbar navbar-default navbar-custom" role="navigation">
-    <a class="navbar-brand navbar-left" href="{{ url_for('index') }}"><h6>Vitech</h6>
-    </a>
+    <a class="navbar-brand navbar-left" href="{{ url_for('index') }}">Vitech App</a>
       <div class="container-fluid">
         <div class = "row">
             <div class = "col-lg-3">
               <ul class="nav nav-pills">
-                <li role="presentation"><a href="{{ url_for('app.insurance') }}">Insurance Plan</a></li>
-                <li role="presentation"><a href="{{ url_for('app.trends') }}">Trends</a></li>
+                <li role="presentation"><a href="{{ url_for('insurance') }}">Insurance Plan</a></li>
+                <li role="presentation"><a href="{{ url_for('trends') }}">Trends</a></li>
               </ul>
             </div>
 
