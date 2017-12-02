@@ -1,22 +1,17 @@
 <!-- YHacks - Vitech Challenge
 Flask web application -->
 
-{% extends "bootstrap/base.html" %}
+{% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
 {% block head %}
     {{super()}}
-    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css')}}"> -->
 {% endblock %}
 
-{% block title %} Vitech webapp {% endblock %}
+{% block title %} Vitech App {% endblock %}
 
 {% block navbar %}
-    <nav class="navbar navbar-default" role="navigation">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="{{ url_for('index') }}">Vitech App</a>
-        </div>
-    </nav>
+    {{super()}}
 {% endblock %}
 
 {% block content %}
@@ -26,7 +21,9 @@ Flask web application -->
         <div class = "col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <div id = "visualization"></div>
+                    <div id = "visualization">
+
+                    </div>
                 </div>
             </div>
         </div>
