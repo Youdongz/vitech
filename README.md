@@ -9,10 +9,10 @@
 
 #### To push to master:
 1. `git add .`
-2. 'git commit -m "your message here"`
-3. 'git push vitech master`
+2. `git commit -m "your message here"`
+3. `git push vitech master`
 
-* data.json -> contains approx 6,000 entries
-* data_50.json -> contains 50 entries
+* basic_10000.json -> contains 10,000 entries of basic info
+* basic_50.json -> contains 50 entries of basic info
 
 Note: more coming...
