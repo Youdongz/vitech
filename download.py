@@ -1,14 +1,14 @@
-import urllib2
+import urllib
 import json
 
-UNIT = 10000
+UNIT = 1400000
 
-url = 'https://v3v10.vitechinc.com/solr/v_participant/select?indent=on&q=*:*&wt=json&rows=%d' % UNIT
-print "Downloading..."
-response = urllib2.urlopen(url)
+url = 'https://v3v10.vitechinc.com/solr/v_participant_detail/select?indent=on&q=*:*&wt=json&rows=%d' % UNIT
+print ("Downloading...")
+response = urllib.urlopen(url)
 
-with open('data_%d.json' % UNIT, 'ab') as f:
+with open('specific_%d.json' % UNIT, 'ab') as f:
 	data = response.read()
 	f.write(data)
 
-print "Done."
+print ("Done.")
