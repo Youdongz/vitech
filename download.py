@@ -3,15 +3,15 @@ import json
 
 UNIT = 1482000
 
-url = 'https://v3v10.vitechinc.com/solr/v_participant/select?indent=on&q=*:*&wt=json&rows=%d' % UNIT
-print "Downloading..."
-response = urllib2.urlopen(url)
+# url = 'https://v3v10.vitechinc.com/solr/v_participant/select?indent=on&q=*:*&wt=json&rows=%d' % UNIT
+# print "Downloading..."
+# response = urllib2.urlopen(url)
 
-with open('basic_%d.json' % UNIT, 'ab') as f:
-	data = response.read()
-	f.write(data)
+# with open('basic_%d.json' % UNIT, 'ab') as f:
+# 	data = response.read()
+# 	f.write(data)
 
-print "Done."
+# print "Done."
 
 
 
@@ -21,6 +21,7 @@ response = urllib2.urlopen(url)
 
 with open('specific_%d.json' % UNIT, 'ab') as f:
 	data = response.read()
+	print "Writing data..."
 	f.write(data)
 
 print "Done."
@@ -32,6 +33,7 @@ response = urllib2.urlopen(url)
 
 with open('decision_%d.json' % UNIT, 'ab') as f:
 	data = response.read()
+	"Writing data..."
 	f.write(data)
 
 print "Done."
