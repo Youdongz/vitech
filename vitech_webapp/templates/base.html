@@ -1,0 +1,26 @@
+{%- extends "bootstrap/base.html" %}
+
+{% block title %} Vitech webapp {% endblock %}
+
+{% block styles %}
+  {{super()}}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/customBootstrap.css') }}">
+{% endblock %}
+
+{% block navbar %}
+  <nav class="navbar navbar-default navbar-custom" role="navigation">
+    <a class="navbar-brand navbar-left" href="{{ url_for('index') }}"><h6>Vitech</h6>
+    </a>
+      <div class="container-fluid">
+        <div class = "row">
+            <div class = "col-lg-3">
+              <ul class="nav nav-pills">
+                <li role="presentation"><a href="{{ url_for('app.insurance') }}">Insurance Plan</a></li>
+                <li role="presentation"><a href="{{ url_for('app.trends') }}">Trends</a></li>
+              </ul>
+            </div>
+
+        </div>
+    </div>
+  </nav>
+{% endblock %}
