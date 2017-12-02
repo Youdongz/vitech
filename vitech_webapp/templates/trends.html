@@ -3,6 +3,59 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
+{% block head %}
+    {{super()}}
+    <style>
+    .state{
+        fill: none;
+        stroke: #a9a9a9;
+        stroke-width: 1;
+    }
+    .state:hover{
+        fill-opacity:0.5;
+    }
+    #tooltip {
+        position: absolute;
+        text-align: center;
+        padding: 20px;
+        margin: 10px;
+        font: 12px sans-serif;
+        background: lightsteelblue;
+        border: 1px;
+        border-radius: 2px;
+        pointer-events: none;
+    }
+    #tooltip h4{
+        margin:0;
+        font-size:14px;
+    }
+    #tooltip{
+        background:rgba(0,0,0,0.9);
+        border:1px solid grey;
+        border-radius:5px;
+        font-size:12px;
+        width:auto;
+        padding:4px;
+        color:white;
+        opacity:0;
+    }
+    #tooltip table{
+        table-layout:fixed;
+    }
+    #tooltip tr td{
+        padding:0;
+        margin:0;
+    }
+    #tooltip tr td:nth-child(1){
+        width:50px;
+    }
+    #tooltip tr td:nth-child(2){
+        text-align:center;
+    }
+</style>
+
+{% endblock %}
+
 {% block title %} Trends {% endblock %}
 {% block navbar %}
     {{super()}}
@@ -13,7 +66,7 @@
 {% endblock %}
 
 {% block content %}
-    
+
     <div class="container">
 
         <div class="row">
@@ -25,10 +78,8 @@
         <div class = "col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <div>
-                        <div id="chartContainer" style="height: 300px; width: 100%;">asdf</div>
-                        <div id="chartContainer2" style="height: 300px; width: 100%;">asdf</div>
-                    </div> <!-- insert visualizations here -->
+                    <div id="tooltip"></div><!-- div to hold tooltip. -->
+                    <svg width="960" height="600" id="statesvg"></svg> <!-- svg to hold the map. -->
                 </div>
             </div>
         </div>
@@ -39,66 +90,41 @@
 
 {% block scripts %}
     {{super()}}
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="{{ url_for('static', filename='js/uStates.js') }}"></script>
     <!-- D3.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
-    <!-- Plotly.js -->
-    <script src="https://d14fo0winaifog.cloudfront.net/plotly-basic.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
     <!-- Canvas -->
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
 
     <script>
-        var options = {
-        exportEnabled: true,
-        animationEnabled: true,
-        title: {
-            text: "jQuery Spline Area Chart"
-        },
-        data: [
-        {
-            type: "splineArea", //change it to line, area, bar, pie, etc
-            dataPoints: [
-                { y: 10 },
-                { y: 6 },
-                { y: 14 },
-                { y: 12 },
-                { y: 19 },
-                { y: 14 },
-                { y: 26 },
-                { y: 10 },
-                { y: 22 }
-            ]
-        }
-        ]
-    };
-    $("#chartContainer").CanvasJSChart(options);
 
-    var chart = new CanvasJS.Chart("chartContainer2", {
-        animationEnabled: true,
-        title:{
-            text: "Email Categories",
-            horizontalAlign: "left"
-        },
-        data: [{
-            type: "doughnut",
-            startAngle: 60,
-            //innerRadius: 60,
-            indexLabelFontSize: 17,
-            indexLabel: "{label} - #percent%",
-            toolTipContent: "<b>{label}:</b> {y} (#percent%)",
-            dataPoints: [
-                { y: 67, label: "Inbox" },
-                { y: 28, label: "Archives" },
-                { y: 10, label: "Labels" },
-                { y: 7, label: "Drafts"},
-                { y: 15, label: "Trash"},
-                { y: 6, label: "Spam"}
-            ]
-        }]
-    });
-    chart.render();
+        function tooltipHtml(n, d){ /* function to create html content string in tooltip div. */
+            return "<h4>"+n+"</h4><table>"+
+                "<tr><td>Premium</td><td>"+(d.p_cnt)+"</td></tr>"+
+                "<tr><td>Gold</td><td>"+(d.g_cnt)+"</td></tr>"+
+                "<tr><td>Silver</td><td>"+(d.s_cnt)+"</td></tr>"+
+                "<tr><td>High</td><td>"+(d.b_cnt)+"</td></tr>"
+                "</table>";
+        }
+
+        var data ={};
+        ["HI", "AK", "FL", "SC", "GA", "AL", "NC", "TN", "RI", "CT", "MA",
+        "ME", "NH", "VT", "NY", "NJ", "PA", "DE", "MD", "WV", "KY", "OH",
+        "MI", "WY", "MT", "ID", "WA", "DC", "TX", "CA", "AZ", "NV", "UT",
+        "CO", "NM", "OR", "ND", "SD", "NE", "IA", "MS", "IN", "IL", "MN",
+        "WI", "MO", "AR", "OK", "KS", "LS", "VA"]
+            .forEach(function(d){
+                var p_cnt=Math.round(100*Math.random());
+                var g_cnt=Math.round(100*Math.random());
+                var s_cnt=Math.round(100*Math.random());
+                var b_cnt=Math.round(100*Math.random());
+                data[d]={p_cnt:d3.min([p_cnt,g_cnt,s_cnt,b_cnt]), g_cnt:d3.max([p_cnt,g_cnt,s_cnt,b_cnt]),
+                        s_cnt:Math.round(([p_cnt+g_cnt+s_cnt+b_cnt])/4), b_cnt:Math.round(([p_cnt+g_cnt+s_cnt+b_cnt])/4), color:d3.interpolate("#ffffcc", "#800026")(p_cnt/100)};
+            });
+
+        uStates.draw("#statesvg", data, tooltipHtml);
+        d3.select(self.frameElement).style("height", "600px");
     </script>
 
 {% endblock %}
