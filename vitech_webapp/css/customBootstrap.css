@@ -15,11 +15,6 @@
   color:black;
 }
 
-.navbar-custom {
-    color: white;
-    background-color: #d1e2f6;
-    font-family: Futura;
-}
 
 .navbar-default .navbar-brand:focus, .navbar-default .navbar-brand:hover {
      color: #23527c;

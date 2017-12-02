@@ -5,32 +5,39 @@
 
 {% block title %} Insurance {% endblock %}
 
+{% block navbar %}
+    {{super()}}
+{% endblock %}
+
+{% block styles %}
+  {{super()}}
+{% endblock %}
+
 {% block content %}
 
     <div class="container">
-
         <div class="row">
-
             <div class="col-lg-12">
-              <div class="well well-sm">
-                  <h3>Insurance Premium estimate</h3>
-                  <p>Input general information about yourself to get an estimate of your insurance premium cost and a suggestion of the plan you should buy.
-                  </p>
-              </div>
+              <div class="col-lg-12">
+                    <h1 class="text-center">Insurance Premium Estimate</h1>
+                  <h3>Your information:</h3>
+                  <div class="panel panel-default">
+                      <div class="panel-body">
+                          <div id = "barGraph"></div>
+                      </div>
+                  </div>
             </div>
 
             <div class="col-lg-12">
               <h3>Your estimated insurance premium:</h3>
-            </div>
-
-        </div>
-
-        <div class = "col-lg-12">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div id = "barGraph"></div>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div id = "barGraph"></div>
+                    </div>
                 </div>
+              </div>
             </div>
+
         </div>
 
     <!-- end container -->
