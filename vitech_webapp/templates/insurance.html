@@ -11,52 +11,92 @@
 
 {% block styles %}
   {{super()}}
+  <style>
+  .plan {
+    border-radius: 5px;
+    margin: 20px;
+    padding: 10px 20px;
+  }
+  </style>
 {% endblock %}
 
 {% block content %}
 
     <div class="container">
+        <h1 class="text-center">Insurance Premium Estimate</h1>
         <div class="row">
-            <div class="col-lg-12">
-              <div class="col-lg-12">
-                    <h1 class="text-center">Insurance Premium Estimate</h1>
-                  <h3>Your information:</h3>
+            <div class="col-lg-6">
+                  <h3>Your Information</h3>
                   <div class="panel panel-default">
                       <div class="panel-body">
-                        <form>
+                        <form  action="" method="post" role="form">
+                          {{ form.csrf }}
                           <div class="form-group">
-                            <label for="name">Full Name:</label>
-                            <input type="name" class="form-control" id="name">
+                            {{ form.name.label }}
+                            <input type="text" class="form-control" id="age" name="name" placeholder="What's your name?">
                           </div>
                           <div class="form-group">
-                            <label for="pwd">Age:</label>
-                            <select class="form-control" id="age">
-                              <option>20 and under</option>
-                              <option>21 - 35</option>
-                              <option>35 - 50</option>
-                              <option>51 and older</option>
-                            </select>
+                            {{ form.smoke.label }} 
+                            <input type="checkbox" class="form-control" id="smoke" name="smoke" placeholder="Are you a frequent smoker?">
                           </div>
-                          <div class="checkbox">
-                            <label><input type="checkbox"> I smoke on a regularly basis, 3+ times a week.</label>
+                          <div class="form-group">
+                            {{ form.number_covered.label }}
+                            <input type="number" class="form-control" id="number_covered" name="number_covered" placeholder="How many people are covered with you?">
                           </div>
-                          <button type="submit" class="btn btn-default">Submit</button>
+                          <div class="form-group">
+                            {{ form.insured_amount.label }} 
+                            <input type="number" default="500000" class="form-control" id="insured_amount" name="insured_amount" placeholder="How much would you like insured? (default: 500000)">
+                          </div>
+
+                          <button type="submit" class="btn btn-success">Submit</button>
                         </form>
                       </div>
                   </div>
-            </div>
-
-            <div class="col-lg-12">
-              <h3>Your estimated insurance premium:</h3>
+              </div>
+            <div class="col-lg-6">
+              <h3>Your Estimated Insurance Premium</h3>
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <div id = "barGraph"></div>
+                        <div class="row plan" style="background: linear-gradient(to top right, #e6f2ff 0%,#c9d8e8 40%, #a6bed9 100%);">
+                          <div style="float: left; color: white"><h2>Platinum Plan</h2></div>
+                          <div style="float: right; width: 50%; text-align: right; color: white">
+                            Base $20/month<br /> 
+                            Ad D 10,000<br /> 
+                            Deductible 8,000<br /> 
+                            Coverage Amount 100,000<br /> 
+                          </div>
+                        </div>
+                        <div class="row plan" style="background: linear-gradient(to top right, #e8c264 0%,#DAA520 40%,#9b7617 100%);">
+                          <div style="float: left; color: white"><h2>Gold Plan</h2></div>
+                          <div style="float: right; width: 50%; text-align: right; color: white">
+                            Base $20/month<br /> 
+                            Ad D 10,000<br /> 
+                            Deductible 8,000<br /> 
+                            Coverage Amount 100,000<br /> 
+                          </div>
+                        </div>
+                        <div class="row plan" style="background: linear-gradient(to top right, #e5e4e2 0%,#c2c0bc 40%,#aaa7a1 100%);">
+                          <div style="float: left; color: white"><h2>Silver Plan</h2></div>
+                          <div style="float: right; width: 50%; text-align: right; color: white">
+                            Base $20/month<br /> 
+                            Ad D 10,000<br /> 
+                            Deductible 8,000<br /> 
+                            Coverage Amount 100,000<br /> 
+                          </div>
+                        </div>
+                        <div class="row plan" style="background: linear-gradient(to top right, #dca66f 0%,#cd7f32 40%,#905923 100%);">
+                          <div style="float: left; color: white"><h2>Bronze Plan</h2></div>
+                          <div style="float: right; width: 50%; text-align: right; color: white">
+                            Base $20/month<br /> 
+                            Ad D 10,000<br /> 
+                            Deductible 8,000<br /> 
+                            Coverage Amount 100,000<br /> 
+                          </div>
+                        </div>
                     </div>
                 </div>
-              </div>
             </div>
-
-        </div>
+          </div>
 
     <!-- end container -->
     </div>
