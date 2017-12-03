@@ -33,7 +33,7 @@ response = urllib2.urlopen(url)
 
 with open('decision_%d.json' % UNIT, 'ab') as f:
 	data = response.read()
-	"Writing data..."
+	print "Writing data..."
 	f.write(data)
 
 print "Done."

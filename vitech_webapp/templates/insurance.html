@@ -23,7 +23,25 @@
                   <h3>Your information:</h3>
                   <div class="panel panel-default">
                       <div class="panel-body">
-                          <div id = "barGraph"></div>
+                        <form>
+                          <div class="form-group">
+                            <label for="name">Full Name:</label>
+                            <input type="name" class="form-control" id="name">
+                          </div>
+                          <div class="form-group">
+                            <label for="pwd">Age:</label>
+                            <select class="form-control" id="age">
+                              <option>20 and under</option>
+                              <option>21 - 35</option>
+                              <option>35 - 50</option>
+                              <option>51 and older</option>
+                            </select>
+                          </div>
+                          <div class="checkbox">
+                            <label><input type="checkbox"> I smoke on a regularly basis, 3+ times a week.</label>
+                          </div>
+                          <button type="submit" class="btn btn-default">Submit</button>
+                        </form>
                       </div>
                   </div>
             </div>
