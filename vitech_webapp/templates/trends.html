@@ -80,6 +80,8 @@
                 <div class="panel-body">
                     <div id="tooltip"></div><!-- div to hold tooltip. -->
                     <svg width="960" height="600" id="statesvg"></svg> <!-- svg to hold the map. -->
+                    <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+                    <div id="bar_graph" width="960" height="600"></div>
                 </div>
             </div>
         </div>
@@ -90,15 +92,19 @@
 
 {% block scripts %}
     {{super()}}
-    <script src="{{ url_for('static', filename='js/uStates.js') }}"></script>
+
     <!-- D3.js -->
     <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
-    <!-- Canvas -->
+
+    <!--<script src="{{ url_for('static', filename='js/uStates.js') }}"></script> -->
+    
+    <!-- Plotly.js -->
+    <script src="https://d14fo0winaifog.cloudfront.net/plotly-basic.js"></script>
+
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-    <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+
 
     <script>
-
         function tooltipHtml(n, d){ /* function to create html content string in tooltip div. */
             return "<h4>"+n+"</h4><table>"+
                 "<tr><td>Premium</td><td>"+(d.p_cnt)+"</td></tr>"+
@@ -125,6 +131,7 @@
 
         uStates.draw("#statesvg", data, tooltipHtml);
         d3.select(self.frameElement).style("height", "600px");
+
     </script>
 
 {% endblock %}
