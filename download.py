@@ -3,6 +3,7 @@ import json
 
 UNIT = 1482000
 
+
 # url = 'https://v3v10.vitechinc.com/solr/v_participant/select?indent=on&q=*:*&wt=json&rows=%d' % UNIT
 # print("Downloading...")
 # response = urllib.request.urlopen(url)
@@ -33,4 +34,8 @@ print("Done.")
 # 	print("Writing data...")
 # 	f.write(data)
 
+<<<<<<< HEAD
+# print("Done.")
+=======
 print("Done.")
+>>>>>>> db9702587a5e14bda2880bbdabda3f19aba0e952

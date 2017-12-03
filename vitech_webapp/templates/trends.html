@@ -85,7 +85,8 @@
                 <div class="panel-body">
                     <h2 class="text-center">Noteworthy Correlation</h2>
                     <div id="tooltip"></div>
-                    <div id = "USgraph" style="text-align:center"><h3>Purchased Insurance Plans across the US</h3></div>
+
+                    <div id = "USgraph" style="text-align:center"><h3>Purchased Insurance Plans across the US by Percentage</h3></div>
                     <svg width="960" height="600" id="statesvg"></svg>
                     <div style="padding: 20px">The Geographic Map shows the percentage of population that chooses each plan in each state. The state color is decided by the plan which is chosen by the majority of that state. The intensity of the shade is decided by the value of the percentage. </div>
                     <div id="tobbacco_on_premium" style="height: 400px; width: 75%;margin: 0 auto"></div>
@@ -121,7 +122,7 @@
             animationEnabled: true,
             title:{
                 text: "The Effect of Tobacco on Insurance Premium"
-            },  
+            },
             axisY: {
                 title: "Monthly Premium"
             },
@@ -134,7 +135,7 @@
             },
             data: [
             {
-                type: "column", 
+                type: "column",
                 name: "Non Smoking",
                 legendText: "Non Smoking",
                 showInLegend: true,
@@ -149,7 +150,7 @@
                 type: "column",
                 name: "Smoking",
                 legendText: "Smoking",
-                showInLegend: true, 
+                showInLegend: true,
                 dataPoints:[
                     { label: "Bronze", y: 56.57 },
                     { label: "Silver", y: 82.57 },
@@ -215,7 +216,7 @@
                 indexLabelFontColor: "darkSlateGray",
                 name: "views",
                 type: "area",
-                dataPoints: [      
+                dataPoints: [
                     { y: 77.378578, label: "1" },
                     { y: 82.595849,  label: "2" },
                     { y: 88.185270,  label: "3" },
