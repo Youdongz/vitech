@@ -3,6 +3,64 @@
 {% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 
+{% block head %}
+    {{super()}}
+    <style>
+    #statesvg{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .state{
+        fill: none;
+        stroke: #a9a9a9;
+        stroke-width: 1;
+    }
+    .state:hover{
+        fill-opacity:0.5;
+    }
+    #tooltip {
+        position: absolute;
+        text-align: center;
+        padding: 20px;
+        margin: 10px;
+        font: 12px sans-serif;
+        background: lightsteelblue;
+        border: 1px;
+        border-radius: 2px;
+        pointer-events: none;
+    }
+    #tooltip h4{
+        margin:0;
+        font-size:14px;
+    }
+    #tooltip{
+        background:rgba(0,0,0,0.9);
+        border:1px solid grey;
+        border-radius:5px;
+        font-size:12px;
+        width:auto;
+        padding:4px;
+        color:white;
+        opacity:0;
+    }
+    #tooltip table{
+        table-layout:fixed;
+    }
+    #tooltip tr td{
+        padding:0;
+        margin:0;
+    }
+    #tooltip tr td:nth-child(1){
+        width:50px;
+    }
+    #tooltip tr td:nth-child(2){
+        text-align:center;
+    }
+</style>
+
+{% endblock %}
+
 {% block title %} Trends {% endblock %}
 {% block navbar %}
     {{super()}}
@@ -13,7 +71,7 @@
 {% endblock %}
 
 {% block content %}
-    
+
     <div class="container">
 
         <div class="row">
@@ -25,10 +83,18 @@
         <div class = "col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <div>
-                        <div id="chartContainer" style="height: 300px; width: 100%;">asdf</div>
-                        <div id="chartContainer2" style="height: 300px; width: 100%;">asdf</div>
-                    </div> <!-- insert visualizations here -->
+                    <h2 class="text-center">Noteworthy Correlation</h2>
+                    <div id="tooltip"></div>
+                    <div id = "USgraph" style="text-align:center"><h3>Purchased Insurance Plans across the US</h3></div>
+                    <svg width="960" height="600" id="statesvg"></svg>
+                    <div style="padding: 20px">blurb 1</div>
+                    <div id="tobbacco_on_premium" style="height: 400px; width: 75%;margin: 0 auto"></div>
+                    <div style="padding: 20px">blurb 2</div>
+                    <div id="people_covered_on_premium_paid" style="height: 400px; width: 70%;margin: 0 auto"></div>
+                    <div style="padding: 20px">blurb 3</div>
+                    <div id="bmi_scatterplot" style="height: 400px; width: 70%;margin: 0 auto"></div>
+                    <div style="padding: 20px">blurb 4</div>
+                    <h2 class="text-center">Noteworthy Lack of Correlation</h2>
                 </div>
             </div>
         </div>
@@ -38,67 +104,159 @@
 {% endblock %}
 
 {% block scripts %}
-    {{super()}}
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+
+    <script src="{{ url_for('static', filename='js/uStates.js') }}"></script>
     <!-- D3.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
-    <!-- Plotly.js -->
-    <script src="https://d14fo0winaifog.cloudfront.net/plotly-basic.js"></script>
-    <!-- Canvas -->
+    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
+    {{super()}}
+
+    <script src="{{ url_for('static', filename='js/uStates.js') }}"></script>
+
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-    <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
 
     <script>
-        var options = {
-        exportEnabled: true,
-        animationEnabled: true,
-        title: {
-            text: "jQuery Spline Area Chart"
-        },
-        data: [
-        {
-            type: "splineArea", //change it to line, area, bar, pie, etc
-            dataPoints: [
-                { y: 10 },
-                { y: 6 },
-                { y: 14 },
-                { y: 12 },
-                { y: 19 },
-                { y: 14 },
-                { y: 26 },
-                { y: 10 },
-                { y: 22 }
-            ]
-        }
-        ]
-    };
-    $("#chartContainer").CanvasJSChart(options);
 
-    var chart = new CanvasJS.Chart("chartContainer2", {
-        animationEnabled: true,
-        title:{
-            text: "Email Categories",
-            horizontalAlign: "left"
-        },
-        data: [{
-            type: "doughnut",
-            startAngle: 60,
-            //innerRadius: 60,
-            indexLabelFontSize: 17,
-            indexLabel: "{label} - #percent%",
-            toolTipContent: "<b>{label}:</b> {y} (#percent%)",
-            dataPoints: [
-                { y: 67, label: "Inbox" },
-                { y: 28, label: "Archives" },
-                { y: 10, label: "Labels" },
-                { y: 7, label: "Drafts"},
-                { y: 15, label: "Trash"},
-                { y: 6, label: "Spam"}
-            ]
-        }]
-    });
-    chart.render();
+        var chart = new CanvasJS.Chart("tobbacco_on_premium", {
+            animationEnabled: true,
+            title:{
+                text: "The Effect of Tobacco on Insurance Premium"
+            },  
+            axisY: {
+                title: "Monthly Premium"
+            },
+            toolTip: {
+                shared: true
+            },
+            legend: {
+                cursor:"pointer",
+                itemclick: toggleDataSeries
+            },
+            data: [
+            {
+                type: "column", 
+                name: "Non Smoking",
+                legendText: "Non Smoking",
+                showInLegend: true,
+                dataPoints:[
+                    { label: "Bronze", y: 40.45 },
+                    { label: "Silver", y: 66.45 },
+                    { label: "Gold", y: 105.45 },
+                    { label: "Platinum", y: 157.45 }
+                ]
+            },
+            {
+                type: "column",
+                name: "Smoking",
+                legendText: "Smoking",
+                showInLegend: true, 
+                dataPoints:[
+                    { label: "Bronze", y: 56.57 },
+                    { label: "Silver", y: 82.57 },
+                    { label: "Gold", y: 121.57 },
+                    { label: "Platinum", y: 173.57 }
+                ]
+            }]
+        });
+        chart.render();
+
+        function toggleDataSeries(e) {
+            if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                e.dataSeries.visible = false;
+            }
+            else {
+                e.dataSeries.visible = true;
+            }
+            chart.render();
+        }
+
+        function tooltipHtml(n, d){ /* function to create html content string in tooltip div. */
+            return "<h4>"+n+"</h4><table>"+
+                "<tr><td>Platinum</td><td>"+(d.Platinum)+"</td></tr>"+
+                "<tr><td>Gold</td><td>"+(d.Gold)+"</td></tr>"+
+                "<tr><td>Silver</td><td>"+(d.Silver)+"</td></tr>"+
+                "<tr><td>Bronze</td><td>"+(d.Bronze)+"</td></tr>"
+                "</table>";
+        }
+
+
+        d3.json("{{ url_for('static', filename='json/insurance_plan_by_state_data.json') }}", function(error, data) {
+
+        ["HI", "AK", "FL", "NH", "MI", "VT", "ME", "RI", "NY", "PA", "NJ",
+        "DE", "MD", "VA", "WV", "OH", "IN", "IL", "CT", "WI", "NC", "DC",
+        "MA", "TN", "AR", "MO", "GA", "SC", "KY", "AL", "LA", "MS", "IA",
+        "MN", "OK", "TX", "NM", "KS", "NE", "SD", "ND", "WY", "MT", "CO",
+        "ID", "UT", "AZ", "NV", "OR", "WA", "CA"]
+            .forEach(function(d){
+                var values = []
+                for (var key in data[d]){
+                    values.push(data[d][key]);
+                }
+                max = d3.max(values);
+                data[d]["color"] = d3.interpolate("#ffffcc", "#800026")(max/100);
+            });
+
+        uStates.draw("#statesvg", data, tooltipHtml);
+         });
+        d3.select(self.frameElement).style("height", "600px");
+
+
+        var chart = new CanvasJS.Chart("people_covered_on_premium_paid", {
+            animationEnabled: true,
+            title: {
+                text: "Correlation Between People Covered and Monthly Premium Paid"
+            },
+            axisY: {
+                title: "Premium Paid Monthly",
+                titleFontColor: "#4F81BC",
+                suffix: "$"
+            },
+            data: [{
+                indexLabelFontColor: "darkSlateGray",
+                name: "views",
+                type: "area",
+                dataPoints: [      
+                    { y: 77.378578, label: "1" },
+                    { y: 82.595849,  label: "2" },
+                    { y: 88.185270,  label: "3" },
+                    { y: 93.055156,  label: "4" },
+                ]
+            }]
+        });
+        chart.render();
+
+        var chart = new CanvasJS.Chart("bmi_scatterplot", {
+            animationEnabled: true,
+            zoomEnabled: true,
+            title:{
+                text: "Correlation Between Approximate Premium Paid and Average BMI"
+            },
+            axisX: {
+                title:"Monthly Premium Paid",
+            },
+            axisY:{
+                title: "Average Body Mass Index (kg/m^2)",
+                minimum: 24,
+            },
+            data: [{
+                type: "scatter",
+                dataPoints: [
+                    { x: 60, y: 29.386047 },
+                    { x: 70, y: 29.148936 },
+                    { x: 80, y: 29.305556 },
+                    { x: 90, y: 29.541586 },
+                    { x: 100, y: 29.455935 },
+                    { x: 110, y: 28.531002 },
+                    { x: 120, y: 28.996071 },
+                    { x: 130, y: 28.622727 },
+                    { x: 140, y: 27.361111 },
+                    { x: 150, y: 27.882353 },
+                    { x: 160, y: 25.000000 }
+                ]
+            }]
+        });
+        chart.render();
+
     </script>
 
 {% endblock %}
