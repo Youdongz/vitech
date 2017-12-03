@@ -9,7 +9,9 @@ classes = {}
 with open('decisions_10000.json', 'r') as f:
 	data = json.load(f)
 	for doc in data:
-		key = (doc[BRONZE] if BRONZE in doc else 0, doc[SILVER], doc[GOLD], doc[PLATINUM])
+		total = sum([1 if BRONZE in doc else 0, 1 if SILVER in doc else 0, 1 if GOLD in doc else 0, 1 if PLATINUM in doc else 0])
+		key = ((doc[BRONZE] if BRONZE in doc else 0) + doc[SILVER] + doc[GOLD] + doc[PLATINUM])/total
+		print doc, key
 		if key not in classes:
 			classes[key] = 0
 
