@@ -10,10 +10,10 @@
 
 {% block navbar %}
   <nav class="navbar navbar-default" role="navigation">
-    <a class="navbar-brand navbar-left" href="{{ url_for('index') }}">Vitech App</a>
+    <a class="navbar-brand navbar-left" href="{{ url_for('index') }}"><img src="../static/vitech.png" height="30" style="padding-left: 130px"/></a>
       <div class="container-fluid">
         <div class = "row">
-            <div class = "col-lg-3">
+            <div class = "col-lg-3" style="float:right">
               <ul class="nav nav-pills">
                 <li role="presentation"><a href="{{ url_for('insurance') }}">Insurance Plan</a></li>
                 <li role="presentation"><a href="{{ url_for('trends') }}">Trends</a></li>

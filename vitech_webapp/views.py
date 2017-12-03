@@ -15,9 +15,9 @@ app.config['SECRET_KEY'] = '7d441f27d441f27567d441f2b6176a'
 
 class ReusableForm(Form):
     name = TextField('Name:', validators=[validators.required()])
-    smoke = SelectField('Active Smoker (3+ / week)', choices=[('Yes', 'Yes'), ('no', 'No')], validators=[validators.required()])
+    smoke = SelectField('Active Smoker (3+ / week)', choices=[('Yes', 'Yes'), ('No', 'No')], validators=[validators.required()])
     number_covered = IntegerField('Number of Family Members Covered:', validators=[validators.required()])
-    insured_amount = IntegerField('Optional Insured Amount', default=500000, validators=[validators.required()])
+    insured_amount = IntegerField('Insured Amount', default=500000, validators=[validators.required()])
 
     def reset(self):
         blankData = MultiDict([ ('csrf', self.reset_csrf() ) ])
@@ -35,6 +35,7 @@ def insurance():
     form = ReusableForm(request.form)
 
     print form.errors
+    estimate = [20, 20, 20, 20]
     if request.method == 'POST':
         name = request.form['name']
         smoke = request.form['smoke']
@@ -44,11 +45,12 @@ def insurance():
         print name + smoke + number_covered + insured_amount
  
         if form.validate():
-            return render_template('insurance.html', form=form, estimate=[0,1,2,3])
+            pass
+            estimate = [0,1,2,3]
         else:
             flash('Please fill in all form fields.')
  
-    return render_template('insurance.html', form=form, estimate=[])
+    return render_template('insurance.html', form=form, estimate=estimate)
 
 @app.route('/trends', methods=['POST', 'GET'])
 def trends():
