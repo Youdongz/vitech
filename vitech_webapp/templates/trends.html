@@ -79,8 +79,17 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div id="tooltip"></div><!-- div to hold tooltip. -->
+                    <h2 class="text-center">Noteworthy Correlation</h2>
                     <svg width="960" height="600" id="statesvg"></svg> <!-- svg to hold the map. -->
+                    <div style="padding: 20px">blurb 1</div>
                     <div id="tobbacco_on_premium" style="height: 400px; width: 75%;margin: 0 auto"></div>
+                    <div style="padding: 20px">blurb 2</div>
+                    <div id="people_covered_on_premium_paid" style="height: 400px; width: 70%;margin: 0 auto"></div>
+                    <div style="padding: 20px">blurb 3</div>
+                    <div id="bmi_scatterplot" style="height: 400px; width: 70%;margin: 0 auto"></div>
+                    <div style="padding: 20px">blurb 4</div>
+
+                    <h2 class="text-center">Noteworthy Lack of Correlation</h2>
                 </div>
             </div>
         </div>
@@ -97,10 +106,7 @@
 
     <script src="{{ url_for('static', filename='js/uStates.js') }}"></script>
 
-    <!-- Plotly.js -->
-    <!-- // <script src="https://d14fo0winaifog.cloudfront.net/plotly-basic.js"></script> -->
-
-    <!-- // <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script> -->
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
     <script>
 
@@ -188,6 +194,63 @@
         uStates.draw("#statesvg", data, tooltipHtml);
          });
         d3.select(self.frameElement).style("height", "600px");
+
+
+        var chart = new CanvasJS.Chart("people_covered_on_premium_paid", {
+            animationEnabled: true,
+            title: {
+                text: "Correlation Between People Covered and Monthly Premium Paid"
+            },
+            axisY: {
+                title: "Premium Paid Monthly",
+                titleFontColor: "#4F81BC",
+                suffix: "$"
+            },
+            data: [{
+                indexLabelFontColor: "darkSlateGray",
+                name: "views",
+                type: "area",
+                dataPoints: [      
+                    { y: 77.378578, label: "1" },
+                    { y: 82.595849,  label: "2" },
+                    { y: 88.185270,  label: "3" },
+                    { y: 93.055156,  label: "4" },
+                ]
+            }]
+        });
+        chart.render();
+
+        var chart = new CanvasJS.Chart("bmi_scatterplot", {
+            animationEnabled: true,
+            zoomEnabled: true,
+            title:{
+                text: "Correlation Between Approximate Premium Paid and Average BMI"
+            },
+            axisX: {
+                title:"Monthly Premium Paid",
+            },
+            axisY:{
+                title: "Average Body Mass Index (kg/m^2)",
+                minimum: 24,
+            },
+            data: [{
+                type: "scatter",
+                dataPoints: [
+                    { x: 60, y: 29.386047 },
+                    { x: 70, y: 29.148936 },
+                    { x: 80, y: 29.305556 },
+                    { x: 90, y: 29.541586 },
+                    { x: 100, y: 29.455935 },
+                    { x: 110, y: 28.531002 },
+                    { x: 120, y: 28.996071 },
+                    { x: 130, y: 28.622727 },
+                    { x: 140, y: 27.361111 },
+                    { x: 150, y: 27.882353 },
+                    { x: 160, y: 25.000000 }
+                ]
+            }]
+        });
+        chart.render();
 
     </script>
 
