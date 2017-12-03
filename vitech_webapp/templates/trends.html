@@ -92,9 +92,12 @@
 
 {% block scripts %}
     {{super()}}
-    <script src="{{ url_for('static', filename='js/uStates.js') }}"></script>
+
     <!-- D3.js -->
     <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
+    <!--<script src="{{ url_for('static', filename='js/uStates.js') }}"></script> -->
+    
     <!-- Plotly.js -->
     <script src="https://d14fo0winaifog.cloudfront.net/plotly-basic.js"></script>
 
@@ -129,37 +132,6 @@
         uStates.draw("#statesvg", data, tooltipHtml);
         d3.select(self.frameElement).style("height", "600px");
 
-        var chart = new CanvasJS.Chart("chartContainer", {
-            animationEnabled: true,
-            theme: "light2",
-            title:{
-                text: "Simple Line Chart"
-            },
-            axisY:{
-                includeZero: false
-            },
-            data: [{        
-                type: "line",       
-                dataPoints: [
-                    { y: 1 },
-                    { y: 189 },
-                    { y: 206 },
-                    { y: 105 },
-                    { y: 121 },
-                    { y: 99 },
-                    { y: 145 },
-                    { y: 114 },
-                    { y: 119 },
-                    { y: 169 },
-                    { y: 194 },
-                    { y: 5 }
-                ]
-            }]
-        });
-        chart.render();
     </script>
 
 {% endblock %}
-
-
-[1, 189, 206, 105, 121, 99, 145, 114, 119, 169, 194, 5, 71, 4, 2, 93, 2, 43, 1, 73, 27, 3, 40, 3, 4, 1, 4, 59, 66, 6, 1, 13, 2, 20, 1]
