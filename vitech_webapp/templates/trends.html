@@ -84,7 +84,7 @@
             <div class="panel panel-default">
                 <div class="panel-body">
                     <div id="tooltip"></div>
-                    <div id = "USgraph" style="text-align:center"><h3>Purchased Insurance Plans across the US</h3></div>
+                    <div id = "USgraph" style="text-align:center"><h3>Purchased Insurance Plans across the US by Percentage</h3></div>
                     <svg width="960" height="600" id="statesvg"></svg>
                 </div>
             </div>
@@ -131,7 +131,7 @@
                     values.push(data[d][key]);
                 }
                 max = d3.max(values);
-                data[d]["color"] = d3.interpolate("#ffffcc", "#800026")(max/100);
+                data[d]["color"] = d3.interpolate("#ffcccc", "#800026")(max/100); //#ffffcc
             });
 
         uStates.draw("#statesvg", data, tooltipHtml);
