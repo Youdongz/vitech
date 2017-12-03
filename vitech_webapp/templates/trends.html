@@ -83,9 +83,18 @@
         <div class = "col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-body">
+                    <h2 class="text-center">Noteworthy Correlation</h2>
                     <div id="tooltip"></div>
                     <div id = "USgraph" style="text-align:center"><h3>Purchased Insurance Plans across the US by Percentage</h3></div>
                     <svg width="960" height="600" id="statesvg"></svg>
+                    <div style="padding: 20px">blurb 1</div>
+                    <div id="tobbacco_on_premium" style="height: 400px; width: 75%;margin: 0 auto"></div>
+                    <div style="padding: 20px">blurb 2</div>
+                    <div id="people_covered_on_premium_paid" style="height: 400px; width: 70%;margin: 0 auto"></div>
+                    <div style="padding: 20px">blurb 3</div>
+                    <div id="bmi_scatterplot" style="height: 400px; width: 70%;margin: 0 auto"></div>
+                    <div style="padding: 20px">blurb 4</div>
+                    <h2 class="text-center">Noteworthy Lack of Correlation</h2>
                 </div>
             </div>
         </div>
@@ -102,12 +111,65 @@
 
     {{super()}}
 
-    <!-- Plotly.js -->
-    <!-- // <script src="https://d14fo0winaifog.cloudfront.net/plotly-basic.js"></script> -->
+    <script src="{{ url_for('static', filename='js/uStates.js') }}"></script>
 
-    <!-- // <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script> -->
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
     <script>
+
+        var chart = new CanvasJS.Chart("tobbacco_on_premium", {
+            animationEnabled: true,
+            title:{
+                text: "The Effect of Tobacco on Insurance Premium"
+            },  
+            axisY: {
+                title: "Monthly Premium"
+            },
+            toolTip: {
+                shared: true
+            },
+            legend: {
+                cursor:"pointer",
+                itemclick: toggleDataSeries
+            },
+            data: [
+            {
+                type: "column", 
+                name: "Non Smoking",
+                legendText: "Non Smoking",
+                showInLegend: true,
+                dataPoints:[
+                    { label: "Bronze", y: 40.45 },
+                    { label: "Silver", y: 66.45 },
+                    { label: "Gold", y: 105.45 },
+                    { label: "Platinum", y: 157.45 }
+                ]
+            },
+            {
+                type: "column",
+                name: "Smoking",
+                legendText: "Smoking",
+                showInLegend: true, 
+                dataPoints:[
+                    { label: "Bronze", y: 56.57 },
+                    { label: "Silver", y: 82.57 },
+                    { label: "Gold", y: 121.57 },
+                    { label: "Platinum", y: 173.57 }
+                ]
+            }]
+        });
+        chart.render();
+
+        function toggleDataSeries(e) {
+            if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                e.dataSeries.visible = false;
+            }
+            else {
+                e.dataSeries.visible = true;
+            }
+            chart.render();
+        }
+
         function tooltipHtml(n, d){ /* function to create html content string in tooltip div. */
             return "<h4>"+n+"</h4><table>"+
                 "<tr><td>Platinum</td><td>"+(d.Platinum)+"</td></tr>"+
@@ -137,6 +199,63 @@
         uStates.draw("#statesvg", data, tooltipHtml);
          });
         d3.select(self.frameElement).style("height", "600px");
+
+
+        var chart = new CanvasJS.Chart("people_covered_on_premium_paid", {
+            animationEnabled: true,
+            title: {
+                text: "Correlation Between People Covered and Monthly Premium Paid"
+            },
+            axisY: {
+                title: "Premium Paid Monthly",
+                titleFontColor: "#4F81BC",
+                suffix: "$"
+            },
+            data: [{
+                indexLabelFontColor: "darkSlateGray",
+                name: "views",
+                type: "area",
+                dataPoints: [      
+                    { y: 77.378578, label: "1" },
+                    { y: 82.595849,  label: "2" },
+                    { y: 88.185270,  label: "3" },
+                    { y: 93.055156,  label: "4" },
+                ]
+            }]
+        });
+        chart.render();
+
+        var chart = new CanvasJS.Chart("bmi_scatterplot", {
+            animationEnabled: true,
+            zoomEnabled: true,
+            title:{
+                text: "Correlation Between Approximate Premium Paid and Average BMI"
+            },
+            axisX: {
+                title:"Monthly Premium Paid",
+            },
+            axisY:{
+                title: "Average Body Mass Index (kg/m^2)",
+                minimum: 24,
+            },
+            data: [{
+                type: "scatter",
+                dataPoints: [
+                    { x: 60, y: 29.386047 },
+                    { x: 70, y: 29.148936 },
+                    { x: 80, y: 29.305556 },
+                    { x: 90, y: 29.541586 },
+                    { x: 100, y: 29.455935 },
+                    { x: 110, y: 28.531002 },
+                    { x: 120, y: 28.996071 },
+                    { x: 130, y: 28.622727 },
+                    { x: 140, y: 27.361111 },
+                    { x: 150, y: 27.882353 },
+                    { x: 160, y: 25.000000 }
+                ]
+            }]
+        });
+        chart.render();
 
     </script>
 
