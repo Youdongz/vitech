@@ -80,8 +80,7 @@
                 <div class="panel-body">
                     <div id="tooltip"></div><!-- div to hold tooltip. -->
                     <svg width="960" height="600" id="statesvg"></svg> <!-- svg to hold the map. -->
-                    <div id="chartContainer" style="height: 300px; width: 100%;"></div>
-                    <div id="bar_graph" width="960" height="600"></div>
+                    <div id="tobbacco_on_premium" style="height: 400px; width: 75%;margin: 0 auto"></div>
                 </div>
             </div>
         </div>
@@ -105,32 +104,87 @@
 
 
     <script>
-        function tooltipHtml(n, d){ /* function to create html content string in tooltip div. */
-            return "<h4>"+n+"</h4><table>"+
-                "<tr><td>Premium</td><td>"+(d.p_cnt)+"</td></tr>"+
-                "<tr><td>Gold</td><td>"+(d.g_cnt)+"</td></tr>"+
-                "<tr><td>Silver</td><td>"+(d.s_cnt)+"</td></tr>"+
-                "<tr><td>High</td><td>"+(d.b_cnt)+"</td></tr>"
-                "</table>";
+        // function tooltipHtml(n, d){ /* function to create html content string in tooltip div. */
+        //     return "<h4>"+n+"</h4><table>"+
+        //         "<tr><td>Premium</td><td>"+(d.p_cnt)+"</td></tr>"+
+        //         "<tr><td>Gold</td><td>"+(d.g_cnt)+"</td></tr>"+
+        //         "<tr><td>Silver</td><td>"+(d.s_cnt)+"</td></tr>"+
+        //         "<tr><td>High</td><td>"+(d.b_cnt)+"</td></tr>"
+        //         "</table>";
+        // }
+
+        // var data ={};
+        // ["HI", "AK", "FL", "SC", "GA", "AL", "NC", "TN", "RI", "CT", "MA",
+        // "ME", "NH", "VT", "NY", "NJ", "PA", "DE", "MD", "WV", "KY", "OH",
+        // "MI", "WY", "MT", "ID", "WA", "DC", "TX", "CA", "AZ", "NV", "UT",
+        // "CO", "NM", "OR", "ND", "SD", "NE", "IA", "MS", "IN", "IL", "MN",
+        // "WI", "MO", "AR", "OK", "KS", "LS", "VA"]
+        //     .forEach(function(d){
+        //         var p_cnt=Math.round(100*Math.random());
+        //         var g_cnt=Math.round(100*Math.random());
+        //         var s_cnt=Math.round(100*Math.random());
+        //         var b_cnt=Math.round(100*Math.random());
+        //         data[d]={p_cnt:d3.min([p_cnt,g_cnt,s_cnt,b_cnt]), g_cnt:d3.max([p_cnt,g_cnt,s_cnt,b_cnt]),
+        //                 s_cnt:Math.round(([p_cnt+g_cnt+s_cnt+b_cnt])/4), b_cnt:Math.round(([p_cnt+g_cnt+s_cnt+b_cnt])/4), color:d3.interpolate("#ffffcc", "#800026")(p_cnt/100)};
+        //     });
+
+        // uStates.draw("#statesvg", data, tooltipHtml);
+        // d3.select(self.frameElement).style("height", "600px");
+
+        // -------------------------------------------------- //
+
+        var chart = new CanvasJS.Chart("tobbacco_on_premium", {
+            animationEnabled: true,
+            title:{
+                text: "The Effect of Tobacco on Insurance Premium"
+            },  
+            axisY: {
+                title: "Monthly Premium"
+            },
+            toolTip: {
+                shared: true
+            },
+            legend: {
+                cursor:"pointer",
+                itemclick: toggleDataSeries
+            },
+            data: [
+            {
+                type: "column", 
+                name: "Non Smoking",
+                legendText: "Non Smoking",
+                showInLegend: true,
+                dataPoints:[
+                    { label: "Bronze", y: 40.45 },
+                    { label: "Silver", y: 66.45 },
+                    { label: "Gold", y: 105.45 },
+                    { label: "Platinum", y: 157.45 }
+                ]
+            },
+            {
+                type: "column",
+                name: "Smoking",
+                legendText: "Smoking",
+                showInLegend: true, 
+                dataPoints:[
+                    { label: "Bronze", y: 56.57 },
+                    { label: "Silver", y: 82.57 },
+                    { label: "Gold", y: 121.57 },
+                    { label: "Platinum", y: 173.57 }
+                ]
+            }]
+        });
+        chart.render();
+
+        function toggleDataSeries(e) {
+            if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+                e.dataSeries.visible = false;
+            }
+            else {
+                e.dataSeries.visible = true;
+            }
+            chart.render();
         }
-
-        var data ={};
-        ["HI", "AK", "FL", "SC", "GA", "AL", "NC", "TN", "RI", "CT", "MA",
-        "ME", "NH", "VT", "NY", "NJ", "PA", "DE", "MD", "WV", "KY", "OH",
-        "MI", "WY", "MT", "ID", "WA", "DC", "TX", "CA", "AZ", "NV", "UT",
-        "CO", "NM", "OR", "ND", "SD", "NE", "IA", "MS", "IN", "IL", "MN",
-        "WI", "MO", "AR", "OK", "KS", "LS", "VA"]
-            .forEach(function(d){
-                var p_cnt=Math.round(100*Math.random());
-                var g_cnt=Math.round(100*Math.random());
-                var s_cnt=Math.round(100*Math.random());
-                var b_cnt=Math.round(100*Math.random());
-                data[d]={p_cnt:d3.min([p_cnt,g_cnt,s_cnt,b_cnt]), g_cnt:d3.max([p_cnt,g_cnt,s_cnt,b_cnt]),
-                        s_cnt:Math.round(([p_cnt+g_cnt+s_cnt+b_cnt])/4), b_cnt:Math.round(([p_cnt+g_cnt+s_cnt+b_cnt])/4), color:d3.interpolate("#ffffcc", "#800026")(p_cnt/100)};
-            });
-
-        uStates.draw("#statesvg", data, tooltipHtml);
-        d3.select(self.frameElement).style("height", "600px");
 
     </script>
 
