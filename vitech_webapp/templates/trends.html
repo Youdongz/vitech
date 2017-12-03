@@ -90,48 +90,19 @@
 {% endblock %}
 
 {% block scripts %}
+    <!-- D3.js -->
+    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
     {{super()}}
 
-    <!-- D3.js -->
-    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="{{ url_for('static', filename='js/uStates.js') }}"></script>
 
-    <!--<script src="{{ url_for('static', filename='js/uStates.js') }}"></script> -->
-    
     <!-- Plotly.js -->
-    <script src="https://d14fo0winaifog.cloudfront.net/plotly-basic.js"></script>
+    <!-- // <script src="https://d14fo0winaifog.cloudfront.net/plotly-basic.js"></script> -->
 
-    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-
+    <!-- // <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script> -->
 
     <script>
-        // function tooltipHtml(n, d){ /* function to create html content string in tooltip div. */
-        //     return "<h4>"+n+"</h4><table>"+
-        //         "<tr><td>Premium</td><td>"+(d.p_cnt)+"</td></tr>"+
-        //         "<tr><td>Gold</td><td>"+(d.g_cnt)+"</td></tr>"+
-        //         "<tr><td>Silver</td><td>"+(d.s_cnt)+"</td></tr>"+
-        //         "<tr><td>High</td><td>"+(d.b_cnt)+"</td></tr>"
-        //         "</table>";
-        // }
-
-        // var data ={};
-        // ["HI", "AK", "FL", "SC", "GA", "AL", "NC", "TN", "RI", "CT", "MA",
-        // "ME", "NH", "VT", "NY", "NJ", "PA", "DE", "MD", "WV", "KY", "OH",
-        // "MI", "WY", "MT", "ID", "WA", "DC", "TX", "CA", "AZ", "NV", "UT",
-        // "CO", "NM", "OR", "ND", "SD", "NE", "IA", "MS", "IN", "IL", "MN",
-        // "WI", "MO", "AR", "OK", "KS", "LS", "VA"]
-        //     .forEach(function(d){
-        //         var p_cnt=Math.round(100*Math.random());
-        //         var g_cnt=Math.round(100*Math.random());
-        //         var s_cnt=Math.round(100*Math.random());
-        //         var b_cnt=Math.round(100*Math.random());
-        //         data[d]={p_cnt:d3.min([p_cnt,g_cnt,s_cnt,b_cnt]), g_cnt:d3.max([p_cnt,g_cnt,s_cnt,b_cnt]),
-        //                 s_cnt:Math.round(([p_cnt+g_cnt+s_cnt+b_cnt])/4), b_cnt:Math.round(([p_cnt+g_cnt+s_cnt+b_cnt])/4), color:d3.interpolate("#ffffcc", "#800026")(p_cnt/100)};
-        //     });
-
-        // uStates.draw("#statesvg", data, tooltipHtml);
-        // d3.select(self.frameElement).style("height", "600px");
-
-        // -------------------------------------------------- //
 
         var chart = new CanvasJS.Chart("tobbacco_on_premium", {
             animationEnabled: true,
@@ -185,6 +156,38 @@
             }
             chart.render();
         }
+
+        function tooltipHtml(n, d){ /* function to create html content string in tooltip div. */
+            return "<h4>"+n+"</h4><table>"+
+                "<tr><td>Platinum</td><td>"+(d.Platinum)+"</td></tr>"+
+                "<tr><td>Gold</td><td>"+(d.Gold)+"</td></tr>"+
+                "<tr><td>Silver</td><td>"+(d.Silver)+"</td></tr>"+
+                "<tr><td>Bronze</td><td>"+(d.Bronze)+"</td></tr>"
+                "</table>";
+        }
+
+
+        d3.json("{{ url_for('static', filename='json/insurance_plan_by_state_data.json') }}", function(error, data) {
+
+        ["HI", "AK", "FL", "NH", "MI", "VT", "ME", "RI", "NY", "PA", "NJ",
+        "DE", "MD", "VA", "WV", "OH", "IN", "IL", "CT", "WI", "NC", "DC",
+        "MA", "TN", "AR", "MO", "GA", "SC", "KY", "AL", "LA", "MS", "IA",
+        "MN", "OK", "TX", "NM", "KS", "NE", "SD", "ND", "WY", "MT", "CO",
+        "ID", "UT", "AZ", "NV", "OR", "WA", "CA"]
+            .forEach(function(d){
+                var values = []
+                for (var key in data[d]){
+                    values.push(data[d][key]);
+                }
+                max = d3.max(values);
+                console.log(d);
+                console.log(data[d]);
+                data[d]["color"] = d3.interpolate("#ffffcc", "#800026")(max/100);
+            });
+
+        uStates.draw("#statesvg", data, tooltipHtml);
+         });
+        d3.select(self.frameElement).style("height", "600px");
 
     </script>
 
